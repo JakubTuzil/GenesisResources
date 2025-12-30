@@ -8,8 +8,6 @@ import org.springframework.web.server.ResponseStatusException;
 import projekt3.GenesisResources.model.User;
 import projekt3.GenesisResources.repository.UserRepository;
 
-
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -33,7 +31,7 @@ public class UserService {
         } catch (Exception e) {
             throw new RuntimeException("Failed to load personID list", e);
         }
-    } //certifikační autorita
+    } // simulace certifikační autority, načítání z text souboru
 
     public User updateUser(User updatedUser) {
 
