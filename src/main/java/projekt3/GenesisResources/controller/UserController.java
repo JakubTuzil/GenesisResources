@@ -5,15 +5,22 @@ import org.springframework.web.bind.annotation.*;
 import projekt3.GenesisResources.model.User;
 import projekt3.GenesisResources.service.UserService;
 
-import java.util.List;
-import java.util.Optional;
-
 @RestController
 @RequestMapping("/api/v1/users")
 public class UserController {
 
     @Autowired
     UserService userService;
+
+    @PostMapping
+    public User createUser(@RequestBody User userInput) {
+        return userService.createUser(userInput);
+    }
+
+    @PutMapping
+    public User updateUser(@RequestBody User user) {
+        return userService.updateUser(user);
+    }
 
     @GetMapping
     public Object getAllUsers(
@@ -34,11 +41,5 @@ public class UserController {
     public void deleteUser(@PathVariable Integer id) {
         userService.deleteUserById(id);
     }
-
-//    @PostMapping
-//    @ResponseBody
-//    public User createUser() {
-//        return userService.createUser();
-//    }
-
 }
+
