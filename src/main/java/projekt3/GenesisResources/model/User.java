@@ -12,7 +12,7 @@ public class User {
     private Integer id;
     private String name;
     private String surname;
-    private String personId;
+    private String personid;
     private String uuid;
 
     public User() {
@@ -23,7 +23,7 @@ public class User {
         this.id = id;
         this.name = name;
         this.surname = surname;
-        this.personId = personId;
+        this.personid = personId;
         this.uuid = uuid;
     }
 
@@ -52,11 +52,11 @@ public class User {
     }
 
     public String getPersonId() {
-        return personId;
+        return personid;
     }
 
     public void setPersonId(String personId) {
-        this.personId = personId;
+        this.personid = personId;
     }
 
     public String getUuid() {
