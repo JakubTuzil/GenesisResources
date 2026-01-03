@@ -1,5 +1,7 @@
 package projekt3.GenesisResources.dto;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserDto {
 
     private Integer id;
