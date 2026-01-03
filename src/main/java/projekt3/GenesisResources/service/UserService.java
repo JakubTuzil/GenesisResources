@@ -5,12 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import projekt3.GenesisResources.dto.UserDto;
 import projekt3.GenesisResources.model.User;
 import projekt3.GenesisResources.repository.UserRepository;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -60,40 +60,51 @@ public class UserService {
         return userRepository.save(userInput);
     }
 
-    public Object getAllUsers(boolean detail) {
+    public List<UserDto> getAllUsers(boolean detail) {
         List<User> users = userRepository.findAll();
 
         if (users.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No users found");
         }
 
-        if (detail) {
-            return users;
-        } else {
-            List<Object> basicUsers = new ArrayList<>();
-            for (User user : users) {
-                basicUsers.add(new Object() {
-                    public Integer id = user.getId();
-                    public String name = user.getName();
-                    public String surname = user.getSurname();
-                });
-            }
-            return basicUsers;
-        }
+        return users.stream()
+                .map(user -> detail
+                                ? new UserDto(
+                                user.getId(),
+                                user.getName(),
+                                user.getSurname(),
+                                user.getPersonId(),
+                                user.getUuid()
+                        )
+                                : new UserDto(
+                                user.getId(),
+                                user.getName(),
+                                user.getSurname()
+                        )
+                )
+                .toList();
     }
 
-    public Object getUserById(Integer id, boolean detail) {
+    public UserDto getUserById(Integer id, boolean detail) {
+
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found")
+                );
 
         if (detail) {
-            return user;
+            return new UserDto(
+                    user.getId(),
+                    user.getName(),
+                    user.getSurname(),
+                    user.getPersonId(),
+                    user.getUuid()
+            );
         } else {
-            return new Object() {
-                public Integer id = user.getId();
-                public String name = user.getName();
-                public String surname = user.getSurname();
-            };
+            return new UserDto(
+                    user.getId(),
+                    user.getName(),
+                    user.getSurname()
+            );
         }
     }
 

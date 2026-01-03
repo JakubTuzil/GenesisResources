@@ -2,8 +2,11 @@ package projekt3.GenesisResources.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import projekt3.GenesisResources.dto.UserDto;
 import projekt3.GenesisResources.model.User;
 import projekt3.GenesisResources.service.UserService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -23,14 +26,14 @@ public class UserController {
     }
 
     @GetMapping
-    public Object getAllUsers(
+    public List<UserDto> getAllUsers(
             @RequestParam(required = false, defaultValue = "false") boolean detail
     ) {
         return userService.getAllUsers(detail);
     }
 
     @GetMapping("/{id}")
-    public Object getUserById(
+    public UserDto getUserById(
             @PathVariable Integer id,
             @RequestParam(required = false, defaultValue = "false") boolean detail
     ) {
